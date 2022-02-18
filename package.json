@@ -1,0 +1,33 @@
+{
+  "name": "mern",
+  "version": "1.0.0",
+  "description": "api with mern stack",
+  "main": "server.js",
+  "scripts": {
+    "serve": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IDRISSHACKER/mern.git"
+  },
+  "keywords": [
+    "reactjs",
+    "maogodb",
+    "expressjs",
+    "ffmpeg",
+    "squelize",
+    "materialui"
+  ],
+  "author": "IDRISSHACKER",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IDRISSHACKER/mern/issues"
+  },
+  "homepage": "https://github.com/IDRISSHACKER/mern#readme",
+  "dependencies": {
+    "express": "^4.17.3",
+    "ffmpeg": "0.0.4",
+    "nodemon": "^2.0.15"
+  }
+}
