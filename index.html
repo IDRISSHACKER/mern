@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Video Converter</h1>
+    <hr>
+    <p>
+    <form enctype="multipart/form-data" id="form-video">
+        <p>
+            <input type="file" name="file" id="file">
+        </p>
+        <p>
+            <label for="to">To:</label>
+            <select name="to" id="to">
+                <option value="mp4">mp4</option>
+                <option value="flv">flv</option>
+                <option value="avi">avi</option>
+                <option value="webm">webm</option>
+            </select>
+        </p>
+        <p>
+            <button type="submit">Convertir</button>
+        </p>
+    </form>
+    </p>
+</body>
+<script>
+
+    window.onload = () => {
+        (async () => {
+            const form_video = document.querySelector("#form-video")
+            const setFile = () => {
+                const API_URI = "http://localhost:4000/convert"
+                const API_METHOD = "post"
+
+                const to = document.querySelector("#to")
+                const file = document.querySelector("#file")
+
+                const videoFormat = to.value
+                const videoFile = file.files[0]
+
+                const FORM_DATA = new FormData()
+                FORM_DATA.append("to", videoFormat)
+                FORM_DATA.append("file", videoFile)
+
+                const xhr = new XMLHttpRequest()
+
+                xhr.onloadstart = (e) => {
+                    console.log("Demage de l'envoi")
+                }
+
+                xhr.onprogress = (e) => {
+                    console.log("envoi en cour...")
+                }
+
+                xhr.onerror = (e) => {
+                    console.log("Erreur l'or de l'envoi")
+                }
+
+                xhr.onreadystatechange = (e) => {
+                    console.log("State changed")
+                }
+
+                xhr.onloadend = (e) => {
+                    console.log("Fin de l'envoie des données")
+                }
+
+                xhr.open(API_METHOD, API_URI)
+                xhr.send(FORM_DATA)
+            }
+
+            const manageConnectivitie = () => {
+                const verifyIfOffLine = () => {
+                    const ifNotOnLine = window.setInterval(() => {
+                        if (!navigator.onLine) {
+                            console.log("Hors connexion")
+                            clearTimeout(ifNotOnLine)
+                            verifyIfOnLine()
+                        }
+                    }, 500)
+                }
+
+                const verifyIfOnLine = () => {
+                    const ifOnLine = window.setInterval(() => {
+                        if (navigator.onLine) {
+                            console.log("Connexion retablie")
+                            clearTimeout(ifOnLine)
+                            verifyIfOffLine()
+                        }
+                    }, 500)
+                }
+                verifyIfOffLine()
+            }
+
+            manageConnectivitie()
+
+            form_video.addEventListener("submit", (e) => {
+                e.preventDefault()
+                setFile()
+            })
+        })()
+    }
+</script>
+
+</html>
